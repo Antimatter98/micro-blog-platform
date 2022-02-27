@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.dev"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-jwt": "^6.1.1",
+    "helmet": "^5.0.2",
     "mongoose": "^6.2.3",
     "morgan": "^1.10.0",
     "uuid": "^8.3.2"
@@ -23,6 +25,7 @@
   "devDependencies": {
     "husky": "^7.0.4",
     "nodemon": "^2.0.15",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "pretty-quick": "^3.1.3"
   }
 }
