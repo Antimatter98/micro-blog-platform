@@ -1,31 +1,36 @@
 {
-  "name": "micro-blog-platform",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.dev"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.26.0",
-    "bcrypt": "^5.0.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "express-jwt": "^6.1.1",
-    "helmet": "^5.0.2",
-    "mongoose": "^6.2.3",
-    "morgan": "^1.10.0",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "husky": "^7.0.4",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.5.1",
-    "pretty-quick": "^3.1.3"
-  }
+	"name": "micro-blog-platform",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.dev"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^0.26.0",
+		"bcrypt": "^5.0.1",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.0",
+		"express": "^4.17.3",
+		"express-jwt": "^6.1.1",
+		"helmet": "^5.0.2",
+		"mongoose": "^6.2.3",
+		"morgan": "^1.10.0",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"husky": "^4.3.8",
+		"nodemon": "^2.0.15",
+		"prettier": "^2.5.1",
+		"pretty-quick": "^3.1.3"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "pretty-quick --staged"
+		}
+	}
 }
