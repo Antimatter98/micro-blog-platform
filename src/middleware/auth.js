@@ -5,6 +5,16 @@ const checkJwt = jwt({
 	algorithms: ['HS256'],
 })
 
+const checkJWTError = (err, _req, res, next) => {
+	if (err.name === 'UnauthorizedError') {
+		res.status(err.status).send({ message: 'Invalid token' })
+		return
+	}
+	next()
+}
+
+const checkAuth = [checkJwt, checkJWTError]
+
 module.exports = {
-	checkJwt,
+	checkAuth,
 }

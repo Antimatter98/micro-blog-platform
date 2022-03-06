@@ -14,7 +14,7 @@ authRouter.post('/signup', async (req, res) => {
 	if (!userWithEmail) {
 		const newUser = new User({ name, email, pwd })
 		const savedUser = await newUser.save()
-		const token = generateAuthToken({ id: savedUser._id })
+		const token = generateAuthToken({ id: savedUser._id?.toString() })
 		return res.status(200).json({ token })
 	} else {
 		return res.status(400).json({ error: 'user exists already' })
@@ -36,7 +36,7 @@ authRouter.post('/login', async (req, res) => {
 		if (!isValidPwd) {
 			return res.status(400).json({ error: 'Invalid password' })
 		} else {
-			const token = generateAuthToken({ id: user._id })
+			const token = generateAuthToken({ id: user._id?.toString() })
 			return res.status(200).json({ token })
 		}
 	}
