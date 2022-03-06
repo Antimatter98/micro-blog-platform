@@ -1,5 +1,7 @@
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3030
+const MONGO_URI = process.env.MONGO_URI
 
 module.exports = {
-    PORT
+	PORT,
+	MONGO_URI,
 }
