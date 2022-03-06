@@ -1,3 +1,4 @@
+const { Types } = require('mongoose')
 const jsonwebtoken = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
@@ -16,8 +17,13 @@ const checkValidPwd = function (pwd, hash) {
 	return bcrypt.compareSync(pwd, hash)
 }
 
+const checkIfValidId = function (id) {
+	return Types.ObjectId.isValid(id)
+}
+
 module.exports = {
 	generateAuthToken,
 	generateHash,
 	checkValidPwd,
+	checkIfValidId,
 }
