@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 const PostSchema = new mongoose.Schema(
 	{
-		creator: { type: mongoose.Schema.ObjectId, ref: 'User' },
-		content: { type: String, maxLength: 200 },
+		creator: { type: mongoose.Schema.ObjectId, required: true, ref: 'User' },
+		content: { type: String, required: true, maxLength: 200 },
 		likes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
 	},
 	{
