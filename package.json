@@ -24,6 +24,7 @@
 		"uuid": "^8.3.2"
 	},
 	"devDependencies": {
+		"eslint": "^8.10.0",
 		"husky": "^4.3.8",
 		"nodemon": "^2.0.15",
 		"prettier": "^2.5.1",
