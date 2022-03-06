@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken')
+const jsonwebtoken = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 const generateAuthToken = data => {
-	return jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1h' })
+	return jsonwebtoken.sign(data, process.env.JWT_SECRET, { expiresIn: '1h' })
 }
 
 const generateHash = pwd => {
