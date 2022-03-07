@@ -11,7 +11,7 @@ feedRouter.get('/:page?', async (req, res) => {
 	const order = req.query?.order || 'desc'
 
 	const user = await User.findById(id).exec()
-	const posts = await Post.aggregate()
+	let posts = await Post.aggregate()
 		.addFields({
 			noOfLikes: {
 				$size: '$likes',
@@ -21,7 +21,8 @@ feedRouter.get('/:page?', async (req, res) => {
 		.skip((page - 1) * limit)
 		.limit(limit)
 		.project({ _id: 0, __v: 0, likes: 0 })
-		.exec()
+
+	posts = await Post.populate(posts, { path: 'creator', select: 'name email' })
 
 	// show posts from people you follow
 	const postsFromFollowing = posts.filter(post => user.following?.includes(post.creator?._id))
