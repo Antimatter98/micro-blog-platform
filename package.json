@@ -5,7 +5,10 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.dev"
+		"dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.dev",
+		"docs:serve": "redoc-cli serve openapi.yaml --watch",
+		"predocs:build": "rm -rf docs && mkdir docs",
+		"docs:build": "redoc-cli bundle openapi.yaml && mv redoc-static.html docs/index.html"
 	},
 	"keywords": [],
 	"author": "",
@@ -28,7 +31,8 @@
 		"husky": "^4.3.8",
 		"nodemon": "^2.0.15",
 		"prettier": "^2.5.1",
-		"pretty-quick": "^3.1.3"
+		"pretty-quick": "^3.1.3",
+		"redoc-cli": "^0.13.8"
 	},
 	"husky": {
 		"hooks": {

@@ -1,0 +1,232 @@
+openapi: '3.0.2'
+info:
+  title: micro-blog-platform
+  description: 'A micro blogging website with basic twitter-like features'
+  version: '0.1'
+  contact:
+    name: 'Antimatter'
+servers:
+  - url: 'http://localhost:8000'
+    description: 'Test server'
+paths:
+  # auth routes
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: 'Signup a new user'
+      operationId: SignupUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                pwd:
+                  type: string
+              required:
+                - name
+                - email
+                - pwd
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        400:
+          description: User already exists
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: 'Login'
+      operationId: LoginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                pwd:
+                  type: string
+              required:
+                - email
+                - pwd
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        400:
+          description: Invalid password
+
+  /user/follow/{userId}:
+    post:
+      tags:
+        - User
+      summary: 'Follow User'
+      operationId: FollowUser
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        400:
+          description: User doesn't exist
+
+  /post/new:
+    post:
+      tags:
+        - Post
+      summary: 'New Post'
+      operationId: NewPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+              required:
+                - content
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        400:
+          description: Please send content
+
+  /post/like/{postId}:
+    post:
+      tags:
+        - Post
+      summary: 'Like a Post'
+      operationId: LikePost
+      parameters:
+        - name: postId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+              required:
+                - content
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        400:
+          description: Post not found
+
+  /feed/{page}:
+    get:
+      tags:
+        - Feed
+      summary: 'Get user feed'
+      operationId: User feed
+      parameters:
+        - name: page
+          in: path
+          schema:
+            type: number
+            default: 1
+          required: true
+        - name: limit
+          in: query
+          schema:
+            type: number
+            default: 1
+          required: true
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - 'createdAt'
+              - 'noOfLikes'
+            default: 'createdAt'
+          required: true
+        - name: order
+          in: query
+          schema:
+            type: string
+            enum:
+              - 'asc'
+              - 'desc'
+            default: 'desc'
+          required: true
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    creator:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        name:
+                          type: string
+                        email:
+                          type: string
+                    content:
+                      type: string
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    noOfLikes:
+                      type: number
