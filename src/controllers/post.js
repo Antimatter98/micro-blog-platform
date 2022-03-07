@@ -23,8 +23,7 @@ postRouter.post('/like/:postId', async (req, res) => {
 	const { postId } = req.params
 	const id = req.user?.id
 
-	const validPostId = checkIfValidId(postId)
-	if (!validPostId) {
+	if (checkIfValidId(postId) === false) {
 		return res.status(400).json({ error: 'Please send valid postId' })
 	}
 
