@@ -12,22 +12,20 @@ feedRouter.get('/:page?', async (req, res) => {
 
 	const user = await User.findById(id).exec()
 	let posts = await Post.aggregate()
+		.match({ creator: { $in: user.following } })
+		.skip((page - 1) * limit)
+		.limit(limit)
 		.addFields({
 			noOfLikes: {
 				$size: '$likes',
 			},
 		})
 		.sort({ [sort]: order })
-		.skip((page - 1) * limit)
-		.limit(limit)
 		.project({ _id: 0, __v: 0, likes: 0 })
 
 	posts = await Post.populate(posts, { path: 'creator', select: 'name email' })
 
-	// show posts from people you follow
-	const postsFromFollowing = posts.filter(post => user.following?.includes(post.creator?._id))
-
-	return res.status(200).json({ posts: postsFromFollowing })
+	return res.status(200).json({ posts })
 })
 
 module.exports = feedRouter
