@@ -7,13 +7,22 @@ feedRouter.get('/:page?', async (req, res) => {
 	const id = req.user?.id
 	const page = req.params?.page || 1
 	const limit = req.query?.limit || 10
+	const sort = req.query?.sort || 'createdAt'
+	const order = req.query?.order || 'desc'
 
 	const user = await User.findById(id).exec()
-	const posts = await Post.find({}, '-_id')
+	const posts = await Post.aggregate()
+		.addFields({
+			noOfLikes: {
+				$size: '$likes',
+			},
+		})
+		.sort({ [sort]: order })
 		.skip((page - 1) * limit)
 		.limit(limit)
-		.populate('creator', 'name email')
+		.project({ _id: 0, __v: 0, likes: 0 })
 		.exec()
+
 	// show posts from people you follow
 	const postsFromFollowing = posts.filter(post => user.following?.includes(post.creator?._id))
 
